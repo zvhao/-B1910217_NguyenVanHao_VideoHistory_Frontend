@@ -4,6 +4,10 @@ export const useAccount = defineStore('accountId', {
   state: () => ({
     account: {},
     searchText: "",
+    toChannel: "",
+    favoriteVideo: false,
+    loggedInAccount: {}
+
   }),
   getters: {
     cleanAccount() {
@@ -13,6 +17,13 @@ export const useAccount = defineStore('accountId', {
       if (localStorage.getItem("account") != null && $cookies.isKey("token") == false)
         localStorage.removeItem("account")
     },
+    onLoggedInAccount() {
+      if (localStorage.getItem("account") != null && $cookies.isKey("token")) {
+        this.loggedInAccount = JSON.parse(localStorage.getItem("account"))
+        console.log(this.loggedInAccount);
+      }
+    }
+
 
   },
   actions: {
@@ -27,7 +38,14 @@ export const useAccount = defineStore('accountId', {
       this.searchText = data
       // console.log(this.searchText);
     },
+    onToChannel(data) {
+      this.toChannel = data
+    },
 
+    onFavoriteVideo(data) {
+      this.favoriteVideo = data
+      // console.log(this.favoriteVideo);
+    }
 
 
   }

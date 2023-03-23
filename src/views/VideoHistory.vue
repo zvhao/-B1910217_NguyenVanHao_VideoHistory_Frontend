@@ -13,13 +13,13 @@
         <button class="btn btn-primary ml-5" @click="refreshList()">
           <i class="fas fa-redo"></i> Làm mới
         </button>
-        <!-- <button
+        <button
           class="ml-4 btn"
           @click="checkFavorite"
           :class="isFavorite ? 'btn-primary' : 'btn-outline-primary'"
         >
           Yêu thích
-        </button> -->
+        </button>
       </h4>
       <VideoList
         v-if="filteredVideosCount > 0"
@@ -35,6 +35,7 @@ import VideoCard from "@/components/VideoCard.vue";
 import InputSearch from "@/components/InputSearch.vue";
 import VideoList from "@/components/VideoList.vue";
 import VideoService from "@/services/video.service";
+import AccountService from "@/services/account.service";
 import $ from "jquery";
 import Swal from "sweetalert2";
 import { useAccount } from "@/stores/use-account";
@@ -52,6 +53,7 @@ export default {
       activeIndex: -1,
       searchText: "",
       isFavorite: false,
+      loggedInAccount: {},
     };
   },
   setup() {
@@ -72,7 +74,9 @@ export default {
     filteredVideos() {
       if (!this.searchText) return this.videos;
       return this.videos.filter((_video, index) => {
-        return this.videoStrings(_video).includes(this.searchText.toLowerCase());
+        return this.videoStrings(_video).includes(
+          this.searchText.toLowerCase()
+        );
       });
     },
     activeVideo() {
@@ -97,10 +101,32 @@ export default {
     async retrieveVideos() {
       if (this.isFavorite) {
         try {
-          this.videos = await VideoService.getAllFavorite();
-          return this.videos.sort((a, b) =>
-            a.createdAt < b.createdAt ? 1 : -1
-          );
+          if (
+            localStorage.getItem("account") != null &&
+            $cookies.isKey("token")
+          ) {
+            const accountId = JSON.parse(localStorage.getItem("account"))._id;
+            const listVideo = await AccountService.findAccountById(accountId);
+            if (listVideo.favorites) {
+              this.videos = [];
+              listVideo.favorites.forEach(async (element) => {
+                try {
+                  const video = await VideoService.getById(element);
+                  if (video._id) {
+                    this.videos.push(video);
+                  }
+                } catch (error) {
+                  console.log(error);
+                }
+              });
+              return this.videos.sort((a, b) =>
+                a.createdAt < b.createdAt ? 1 : -1
+              );
+            }
+          } else {
+            this.videos = [];
+
+          }
         } catch (error) {
           console.log(error);
         }
@@ -118,6 +144,7 @@ export default {
 
     refreshList() {
       this.retrieveVideos();
+      this.searchText = "";
       this.activeIndex = -1;
     },
     removeAllVideos() {

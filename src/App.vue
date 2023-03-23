@@ -8,6 +8,9 @@
     <button class="btn btn-primary btn-darkmode" @click="changeDarkmode()">
       <i class="fa-solid fa-circle-half-stroke"></i>
     </button>
+    <!-- <button class="back-to-top btn btn-primary rounded-circle">
+      <i class="fa-solid fa-jet-fighter-up"></i>
+    </button> -->
   </div>
 </template>
 
@@ -33,9 +36,7 @@ export default {
       // dataLogin
     };
   },
-  computed: {
-
-  },
+  computed: {},
 
   methods: {
     log() {
@@ -53,7 +54,6 @@ export default {
         localStorage.removeItem("account");
         console.log("local null, token has");
       }
-      
     },
     logDarkmode() {
       if (
@@ -67,19 +67,21 @@ export default {
       }
     },
     changeDarkmode() {
-      if (localStorage.getItem("darkmode") != null && localStorage.getItem("darkmode") == "true") {
-        localStorage.setItem("darkmode", "false")
-        this.logDarkmode()
+      if (
+        localStorage.getItem("darkmode") != null &&
+        localStorage.getItem("darkmode") == "true"
+      ) {
+        localStorage.setItem("darkmode", "false");
+        this.logDarkmode();
       } else {
-        localStorage.setItem("darkmode", "true")
-        this.logDarkmode()
+        localStorage.setItem("darkmode", "true");
+        this.logDarkmode();
       }
-    }
-
+    },
   },
   mounted() {
     this.log();
-    this.logDarkmode()
+    this.logDarkmode();
   },
 };
 </script>
@@ -98,5 +100,14 @@ export default {
 .darkmode {
   background-color: rgb(0, 0, 0) !important;
   color: white;
+}
+
+.back-to-top {
+  font-size: 20px !important;
+  width: 50px;
+  height: 50px;
+  position: fixed;
+  bottom: 50px;
+  right: 10px;
 }
 </style>

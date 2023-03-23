@@ -29,18 +29,14 @@
     </div>
     <div class="mt-3 col-12">
       <h4>
-        <span class="px-3">Channel đã đăng {{ filteredVideosCount }} video</span>
+        <span class="px-3"
+          >Channel đã đăng {{ filteredVideosCount }} video</span
+        >
         <i class="fa-solid fa-video"></i>
         <button class="btn btn-primary ml-5" @click="refreshList()">
           <i class="fas fa-redo"></i> Làm mới
         </button>
-        <button
-          class="ml-4 btn"
-          @click="checkFavorite"
-          :class="isFavorite ? 'btn-primary' : 'btn-outline-primary'"
-        >
-          Yêu thích
-        </button>
+        
       </h4>
       <VideoList
         v-if="filteredVideosCount > 0"
@@ -81,11 +77,14 @@ export default {
   setup() {
     const store = useAccount();
     return {
-      // checkDarkMode: false,
       ...storeToRefs(store),
     };
   },
   watch: {
+    username(value) {
+      // console.log(value);
+      this.refreshList();
+    },
     // Giám sát các thay đổi của biến searchText.
     // Bỏ chọn phần tử đang được chọn trong danh sách.
     searchText() {
@@ -93,7 +92,6 @@ export default {
     },
   },
   computed: {
-
     // Chuyển các đối tượng video thành chuỗi để tiện cho tìm kiếm.
     videoStrings() {
       return this.videos.map((video) => {
@@ -127,29 +125,18 @@ export default {
       this.refreshList();
     },
     async retrieveVideos() {
-      if (this.isFavorite) {
-        try {
-          this.videos = await VideoService.getAllFavorite();
+      try {
+        this.channel = await AccountService.findAccountByUsername(
+          this.username
+        );
+        if (this.channel._id) {
+          this.videos = await VideoService.getChannel(this.channel._id);
           return this.videos.sort((a, b) =>
             a.createdAt < b.createdAt ? 1 : -1
           );
-        } catch (error) {
-          console.log(error);
         }
-      } else {
-        try {
-          this.channel = await AccountService.findAccountByUsername(
-            this.username
-          );
-          if (this.channel._id) {
-            this.videos = await VideoService.getChannel(this.channel._id);
-            return this.videos.sort((a, b) =>
-              a.createdAt < b.createdAt ? 1 : -1
-            );
-          }
-        } catch (error) {
-          console.log(error);
-        }
+      } catch (error) {
+        console.log(error);
       }
     },
 

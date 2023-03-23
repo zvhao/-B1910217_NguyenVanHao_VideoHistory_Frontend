@@ -76,7 +76,7 @@ export default {
     async updateVideo(data) {
       try {
         data.token = $cookies.get("token");
-        console.log(data.accountId);
+        // console.log(data.accountId);
         this.dataUpdate = await VideoService.update(this.video.slug, data);
         if (!this.dataUpdate.errMessage) {
           Swal.fire({

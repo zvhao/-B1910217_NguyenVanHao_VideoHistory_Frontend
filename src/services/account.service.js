@@ -24,6 +24,13 @@ class AccountService {
 	async findAccountById(id) {
 		return (await this.api.get(`/account/id/${id}`)).data;
 	}
+
+	async addFavorite(id, data) {
+		return (await this.api.patch(`/favorites/${id}`, data)).data;
+	}
+	async removeFavorite(id, data) {
+		return (await this.api.patch(`/favorites/remove/${id}`, data)).data;
+	}
 	
 	// async deleteAll() {
 	// 	return (await this.api.delete("/")).data;

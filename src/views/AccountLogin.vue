@@ -88,7 +88,7 @@ export default {
           localStorage.setItem("account", JSON.stringify(account));
           useAccount().onDataLogin(account);
         }
-        console.log(this.dataLogin);
+        // console.log(this.dataLogin);
       } catch (error) {
         console.log(error);
       }

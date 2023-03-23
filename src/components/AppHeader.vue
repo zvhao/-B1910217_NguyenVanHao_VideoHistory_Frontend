@@ -2,22 +2,15 @@
 <template>
   <nav class="app-nav navbar navbar-expand navbar-dark px-4">
     <div class="profile-header navbar-nav">
-      <a href="/" class="d-flex nav-item m-0">
+      <a href="/" class="d-flex nav-item m-0 align-items-center">
         <img
-          class="avatar-header nav-link p-0"
-          src="../assets/img/logo.png"
+          class="avatar-header nav-link p-0 px-3"
+          src="../assets/img/play.png"
           alt=""
         />
+        <span class="text-white">Tìm hiểu lịch sử Việt Nam qua video</span>
       </a>
     </div>
-    <ul class="navbar-nav">
-      <li class="nav-item">
-        <router-link :to="{ name: 'videohistory' }" class="nav-link">
-          Videos
-          <i class="fa-solid fa-video"></i>
-        </router-link>
-      </li>
-    </ul>
     <div class="input-group w-50 m-auto">
       <input
         type="text"
@@ -103,6 +96,7 @@ export default {
     },
     goToChannel() {
       if (localStorage.getItem("account") != null) {
+        useAccount().onToChannel(this.account.username)
         this.$router.push({
           name: "channel",
           params: { username: this.account.username },

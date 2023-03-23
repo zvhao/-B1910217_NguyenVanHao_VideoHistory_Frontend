@@ -26,6 +26,10 @@ class VideoService {
 	async get(slug) {
 		return (await this.api.get(`/${slug}`)).data;
 	}
+
+	async getById(id) {
+		return (await this.api.get(`/id/${id}`)).data;
+	}
 	
 	async update(slug, data) {
 		return (await this.api.patch(`/${slug}`, data)).data;
@@ -33,6 +37,13 @@ class VideoService {
 	
 	async delete(id) {
 		return (await this.api.delete(`/${id}`)).data;
+	}
+
+	async addFavorite(slug, data) {
+		return (await this.api.patch(`/favorites/${slug}`, data)).data;
+	}
+	async removeFavorite(slug, data) {
+		return (await this.api.patch(`/favorites/remove/${slug}`, data)).data;
 	}
 	
 }
