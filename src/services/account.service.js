@@ -3,15 +3,6 @@ class AccountService {
 	constructor(baseUrl = "/api/auth") {
 		this.api = createApiClient(baseUrl);
 	}
-	
-	// async getAll() {
-	// 	return (await this.api.get("/")).data;
-	// }
-
-	// async getAllFavorite() {
-	// 	return (await this.api.get("/favorite")).data;
-	// }
-	
 	async create(data) {
 		return (await this.api.post("/register", data)).data;
 	}
@@ -31,22 +22,6 @@ class AccountService {
 	async removeFavorite(id, data) {
 		return (await this.api.patch(`/favorites/remove/${id}`, data)).data;
 	}
-	
-	// async deleteAll() {
-	// 	return (await this.api.delete("/")).data;
-	// }
-	
-	// async get(slug) {
-	// 	return (await this.api.get(`/${slug}`)).data;
-	// }
-	
-	// async update(slug, data) {
-	// 	return (await this.api.patch(`/${slug}`, data)).data;
-	// }
-	
-	// async delete(id) {
-	// 	return (await this.api.delete(`/${id}`)).data;
-	// }
 	
 }
 

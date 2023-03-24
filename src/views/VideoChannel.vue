@@ -49,17 +49,14 @@
 </template>
 <script>
 import VideoCard from "@/components/VideoCard.vue";
-import InputSearch from "@/components/InputSearch.vue";
 import VideoList from "@/components/VideoList.vue";
 import VideoService from "@/services/video.service";
 import AccountService from "@/services/account.service";
-import Swal from "sweetalert2";
-import { useAccount } from "@/stores/use-account";
+import { useStore } from "@/stores/use-store";
 import { storeToRefs } from "pinia";
 export default {
   components: {
     VideoCard,
-    InputSearch,
     VideoList,
   },
   props: {
@@ -75,7 +72,7 @@ export default {
     };
   },
   setup() {
-    const store = useAccount();
+    const store = useStore();
     return {
       ...storeToRefs(store),
     };

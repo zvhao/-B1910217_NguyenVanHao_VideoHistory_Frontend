@@ -17,11 +17,6 @@
         class="form-control"
         placeholder="Nhập thông tin cần tìm" v-model="searchText"
       />
-      <!-- <div class="input-group-append">
-        <button class="btn btn-outline-secondary" type="button" @click="submit">
-          <i class="fas fa-search"></i> Tìm kiếm
-        </button>
-      </div> -->
     </div>
 
     <div class="profile-header navbar-nav">
@@ -60,7 +55,7 @@
   </nav>
 </template>
 <script>
-import { useAccount } from "@/stores/use-account";
+import { useStore } from "@/stores/use-store";
 import { storeToRefs } from "pinia";
 export default {
   props: {
@@ -70,7 +65,7 @@ export default {
     account: {},
   },
   setup() {
-    const store = useAccount();
+    const store = useStore();
     return {
       searchText: "",
       // checkDarkMode: false,
@@ -88,7 +83,7 @@ export default {
   },
   methods: {
     submit(data) {
-      useAccount().onSearchText(data);
+      useStore().onSearchText(data);
     },
     goToLogin() {
       if (localStorage.getItem("account") === null)
@@ -96,7 +91,7 @@ export default {
     },
     goToChannel() {
       if (localStorage.getItem("account") != null) {
-        useAccount().onToChannel(this.account.username)
+        useStore().onToChannel(this.account.username)
         this.$router.push({
           name: "channel",
           params: { username: this.account.username },
@@ -112,7 +107,7 @@ export default {
       if (localStorage.getItem("account") != null && $cookies.isKey("token")) {
         await localStorage.removeItem("account");
         await $cookies.remove("token");
-        useAccount().onDataLogin({});
+        useStore().onDataLogin({});
         Swal.fire({
           icon: "info",
           title: "Bạn đã đăng xuất!",

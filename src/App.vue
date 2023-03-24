@@ -2,46 +2,35 @@
   <div id="app" class="">
     <AppHeader />
     <div class="m-3 mb-0">
-      <!-- <SideBars class="col-2" /> -->
       <router-view class="col" />
     </div>
     <button class="btn btn-primary btn-darkmode" @click="changeDarkmode()">
       <i class="fa-solid fa-circle-half-stroke"></i>
     </button>
-    <!-- <button class="back-to-top btn btn-primary rounded-circle">
-      <i class="fa-solid fa-jet-fighter-up"></i>
-    </button> -->
   </div>
 </template>
 
 <script>
 import AppHeader from "@/components/AppHeader.vue";
-import SideBars from "@/components/SideBars.vue";
 import $ from "jquery";
-import { useAccount } from "@/stores/use-account";
+import { useStore } from "@/stores/use-store";
 import { storeToRefs } from "pinia";
-import { boolean } from "yup";
+
 export default {
   components: {
     AppHeader,
-    SideBars,
   },
   setup() {
-    const store = useAccount();
-    // const { dataLogin } = store
-
+    const store = useStore();
     return {
-      // checkDarkMode: false,
       ...storeToRefs(store),
-      // dataLogin
     };
   },
-  computed: {},
 
   methods: {
     log() {
       if (JSON.parse(localStorage.getItem("account")) != null) {
-        useAccount().onDataLogin(JSON.parse(localStorage.getItem("account")));
+        useStore().onDataLogin(JSON.parse(localStorage.getItem("account")));
       }
       if (localStorage.getItem("account") == null && $cookies.isKey("token")) {
         $cookies.remove("token");

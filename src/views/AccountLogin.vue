@@ -36,7 +36,7 @@
 import * as yup from "yup";
 import { Form, Field, ErrorMessage } from "vee-validate";
 import AccountService from "@/services/account.service";
-import { useAccount } from "@/stores/use-account";
+import { useStore } from "@/stores/use-store";
 export default {
   components: {
     Form,
@@ -62,9 +62,6 @@ export default {
     };
   },
   methods: {
-    // submitVideo() {
-    //   this.$emit("submit:video", this.account);
-    // },
     async accountLogin(data) {
       try {
         this.dataLogin = {};
@@ -86,9 +83,8 @@ export default {
             fullname: this.dataLogin.data.fullname,
           };
           localStorage.setItem("account", JSON.stringify(account));
-          useAccount().onDataLogin(account);
+          useStore().onDataLogin(account);
         }
-        // console.log(this.dataLogin);
       } catch (error) {
         console.log(error);
       }

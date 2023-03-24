@@ -37,9 +37,7 @@ export default {
             this.video.accountId ==
             JSON.parse(localStorage.getItem("account"))._id
           ) {
-            // console.log("true");
           } else {
-            // console.log("false");
             this.$router.push({
               name: "notfound",
               params: {
@@ -50,7 +48,6 @@ export default {
             });
           }
         } else {
-          // console.log("false");
           this.$router.push({
             name: "notfound",
             params: {

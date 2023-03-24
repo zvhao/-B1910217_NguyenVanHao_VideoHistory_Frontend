@@ -42,7 +42,6 @@ export default {
             showConfirmButton: true,
           });
         }
-        // console.log(this.video);
       } catch (error) {
         console.log(error);
       }

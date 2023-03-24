@@ -63,18 +63,6 @@ export default {
     updateActiveIndex(index) {
       this.$emit("update:activeIndex", index);
     },
-    // sortedArrayByCreateAt() {
-    //   return this.videos.sort((a, b) => (a.createdAt < b.createdAt ? 1 : -1));
-    // },
-    // sortedArrayByFavorite() {
-    //   if (this.isActiveFavorite) {
-    //     this.isActiveFavorite = !this.isActiveFavorite;
-    //     return this.videos.sort((a, b) => (a.favorite > b.favorite ? 1 : -1));
-    //   } else {
-    //     this.isActiveFavorite = !this.isActiveFavorite;
-    //     return this.videos.sort((a, b) => (a.favorite < b.favorite ? 1 : -1));
-    //   }
-    // },
     goToVideoShow(slug) {
       this.$router.push({ name: "video.show", params: { slug: slug } });
     },

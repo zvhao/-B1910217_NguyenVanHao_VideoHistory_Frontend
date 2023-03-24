@@ -36,7 +36,7 @@
           <h5>{{ accountOwn.fullname }}</h5>
         </div>
         <div class="col d-flex align-items-center">
-          <div>
+          <div class="mr-5">
             <button
               v-if="favoriteVideo == true"
               @click="changeFavorite()"
@@ -118,14 +118,14 @@
 import VideoService from "@/services/video.service";
 import AccountService from "@/services/account.service";
 import $ from "jquery";
-import { useAccount } from "@/stores/use-account";
+import { useStore } from "@/stores/use-store";
 import { storeToRefs } from "pinia";
 export default {
   props: {
     slug: { type: String, required: true },
   },
   setup() {
-    const store = useAccount();
+    const store = useStore();
     return {
       ...storeToRefs(store),
     };
@@ -166,10 +166,8 @@ export default {
       try {
         this.video = await VideoService.get(slug);
         if (this.video.accountId) {
-          // console.log(this.video.accountId);
           if (this.video.favorites) {
             const arr = this.video.favorites;
-            // console.log(this.video.favorites);
             if (localStorage.getItem("account") != null) {
               const id = JSON.parse(localStorage.getItem("account"))._id;
               if (arr.includes(id)) {
@@ -177,9 +175,8 @@ export default {
                 console.log("da luu");
               } else {
                 this.favoriteVideo = false;
-                // console.log("chua luu");
               }
-              useAccount().onFavoriteVideo(this.favoriteVideo);
+              useStore().onFavoriteVideo(this.favoriteVideo);
             }
           }
           try {
@@ -192,7 +189,6 @@ export default {
         } else {
           this.$router.push({ name: "notFound" });
         }
-        // console.log(this.video);
       } catch (error) {
         console.log(error);
         // Chuyển sang trang NotFound đồng thời giữ cho URL không đổi
@@ -215,15 +211,11 @@ export default {
             this.video.accountId ==
             JSON.parse(localStorage.getItem("account"))._id
           ) {
-            // console.log("true");
             this.ownVideo = true;
           } else {
-            // console.log("false");
             this.ownVideo = false;
           }
-          // console.log(this.video);
         } else {
-          // console.log("false 1");
           this.ownVideo = false;
         }
       } catch (error) {
@@ -260,7 +252,7 @@ export default {
             console.log(this.dataAccount.favorites);
             if (this.dataVideo._id && this.dataAccount._id) {
               this.favoriteVideo = !this.favoriteVideo;
-              useAccount().onFavoriteVideo(this.favoriteVideo);
+              useStore().onFavoriteVideo(this.favoriteVideo);
               Swal.fire({
                 icon: "success",
                 title: "Lưu vào mục yêu thích thành công!",
@@ -285,7 +277,7 @@ export default {
             console.log(this.dataAccount);
             if (this.dataVideo._id && this.dataAccount._id) {
               this.favoriteVideo = !this.favoriteVideo;
-              useAccount().onFavoriteVideo(this.favoriteVideo);
+              useStore().onFavoriteVideo(this.favoriteVideo);
               Swal.fire({
                 icon: "success",
                 title: "Đã xoá khỏi mục yêu thích!",

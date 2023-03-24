@@ -2,7 +2,6 @@
   <div class="showPage">
   
     <div class="p-1 d-flex flex-column">
-      <!-- <strong>Video:</strong> -->
       <iframe
         class="size-video w-75 m-auto"
         :src="'https://www.youtube.com/embed/' + video.videoId"
@@ -38,9 +37,6 @@ export default {
   },
 };
 </script>
-
-
-
 <style>
 .title-video {
   font-size: 22px;

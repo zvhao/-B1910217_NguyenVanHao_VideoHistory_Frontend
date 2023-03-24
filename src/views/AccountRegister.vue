@@ -73,9 +73,6 @@ export default {
     };
   },
   methods: {
-    // submitVideo() {
-    //   this.$emit("submit:video", this.account);
-    // },
     async registerAccount(data) {
       try {
         const checkData = await AccountService.findAccountByUsername(data.username);
@@ -93,7 +90,6 @@ export default {
         } else {
           this.messageRegister = "Username Đã tồn tại";
         }
-        // console.log(this.account);
       } catch (error) {
         console.log(error);
       }
