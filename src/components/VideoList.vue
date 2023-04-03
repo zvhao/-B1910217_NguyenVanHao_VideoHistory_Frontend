@@ -38,7 +38,10 @@
           <div class="card-body pt-0">
             <span class="title-video mb-2">{{ video.title }}</span>
 
-            <button @click="goToVideoShow(video.slug)" class="btn btn-sm btn-primary">
+            <button
+              @click="goToVideoShow(video.slug)"
+              class="btn btn-sm btn-primary"
+            >
               Xem chi tiết
             </button>
           </div>
@@ -51,8 +54,7 @@
 <script>
 export default {
   data() {
-    return {
-    };
+    return {};
   },
   props: {
     videos: { type: Array, default: [] },
@@ -67,7 +69,12 @@ export default {
       this.$router.push({ name: "video.show", params: { slug: slug } });
     },
     gotoTop() {
-      window.scrollTo(0, top);
+      $("html, body").animate(
+        {
+          scrollTop: 95,
+        },
+        1000
+      );
     },
     mouseover(index) {
       // this.$('.hover-fast-view')

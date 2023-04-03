@@ -106,20 +106,32 @@ export default {
             const listVideo = await AccountService.findAccountById(accountId);
             if (listVideo.favorites) {
               this.videos = [];
-              listVideo.favorites.forEach(async (element) => {
+              for(let i = listVideo.favorites.length; i >= 0; i-- ) {
                 try {
-                  const video = await VideoService.getById(element);
+                  const video = await VideoService.getById(listVideo.favorites[i]);
                   if (video._id) {
                     this.videos.push(video);
                   }
                 } catch (error) {
                   console.log(error);
                 }
-              });
-              return this.videos.sort((a, b) =>
-                a.createdAt < b.createdAt ? 1 : -1
-              );
+              }
+              // listVideo.favorites.forEach(async (element) => {
+                // try {
+                //   const video = await VideoService.getById(element);
+                //   if (video._id) {
+                //     this.videos.push(video);
+                //   }
+                // } catch (error) {
+                //   console.log(error);
+                // }
+              // });
+              // return this.videos.sort((a, b) =>
+              //   a.createdAt < b.createdAt ? 1 : -1
+              // );
+
             }
+            return this.videos
           } else {
             this.videos = [];
 

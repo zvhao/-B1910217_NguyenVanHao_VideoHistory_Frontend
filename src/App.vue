@@ -43,6 +43,7 @@ export default {
         localStorage.removeItem("account");
         console.log("local null, token has");
       }
+
     },
     logDarkmode() {
       if (

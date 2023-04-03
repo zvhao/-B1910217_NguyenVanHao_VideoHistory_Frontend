@@ -46,6 +46,24 @@ export default {
         console.log(error);
       }
     },
+    denyAccess() {
+      if (
+        localStorage.getItem("account") == null &&
+        $cookies.isKey("token") == false
+      ) {
+        this.$router.push({
+              name: "notfound",
+              params: {
+                pathMatch: this.$route.path.split("/").slice(1),
+              },
+              query: this.$route.query,
+              hash: this.$route.hash,
+            });
+      }
+    }
   },
+  mounted() {
+    this.denyAccess()
+  }
 };
 </script>
